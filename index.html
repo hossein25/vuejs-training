@@ -9,7 +9,15 @@
     </head>
     <body>
         <div id="app">
-            <h2>Hello {{firstName}} {{lastName}}</h2>
+            <div v-if="loading">
+                <img src="spinner.svg" alt="loading svg" />
+            </div>
+            <div v-if="!loading" class="content">
+                <h2>Hello {{firstName}} {{lastName}}</h2>
+                <img class="avatar" v-bind:src="picture" :alt="`${firstName} ${lastName} avatar `" />
+
+                <button v-on:click="getRandomUser()">Generate Random User</button>
+            </div>
         </div>
 
         <script src="https://unpkg.com/vue@3.0.5"></script>
