@@ -8,7 +8,18 @@
     </div>
 
     <div class="task-action">
-      <button class="delete-btn" @click="onDelete(task.id)">X</button>
+      <img
+        :src="deleteSvg"
+        v-if="!isEditing"
+        @click="onDelete(task.id)"
+        class="icons"
+      />
+      <img
+        :src="cancelSvg"
+        v-if="isEditing"
+        @click="cancelEditing()"
+        class="icons"
+      />
       <img
         :src="editSvg"
         v-if="!isEditing"
@@ -39,7 +50,9 @@ export default {
       isEditing: false,
       taskTitle: this.task.title,
       editSvg: require("../assets/edit.svg"),
-      checkSvg: require("../assets/check.svg"),
+      checkSvg: require("../assets/check.png"),
+      cancelSvg: require("../assets/cancel.svg"),
+      deleteSvg: require("../assets/delete.svg"),
     };
   },
   methods: {
@@ -50,6 +63,10 @@ export default {
     updateTask() {
       this.onEdit({ ...this.task, title: this.taskTitle });
       this.isEditing = false;
+    },
+    cancelEditing() {
+      this.isEditing = false;
+      this.taskTitle = this.task.title;
     },
   },
 };
