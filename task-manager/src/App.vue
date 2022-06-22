@@ -1,5 +1,10 @@
 <template>
-  <Tasks :tasks="tasks" :on-delete="onDeleteTask" :on-add="onAddTask" />
+  <Tasks
+    :tasks="tasks"
+    :on-delete="onDeleteTask"
+    :on-add="onAddTask"
+    :on-edit="onEditTask"
+  />
 </template>
 
 <script>
@@ -21,6 +26,10 @@ export default {
     },
     onAddTask(taskTitle) {
       this.tasks.push({ id: Date.now(), title: taskTitle, completed: false });
+    },
+    onEditTask(task) {
+      const taskIndex = this.tasks.findIndex((t) => t.id === task.id);
+      this.tasks[taskIndex] = task;
     },
   },
 

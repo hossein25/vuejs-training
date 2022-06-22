@@ -10,7 +10,7 @@
     </div>
     <ul>
       <li :key="task.id" v-for="task in tasks">
-        <Task :task="task" :on-delete="onDelete" />
+        <Task :task="task" :onDelete="onDelete" :onEdit="onEdit" />
       </li>
     </ul>
   </div>
@@ -27,6 +27,7 @@ export default {
     tasks: Array,
     onDelete: Function,
     onAdd: Function,
+    onEdit: Function,
   },
   data() {
     return {

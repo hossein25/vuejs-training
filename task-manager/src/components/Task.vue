@@ -3,10 +3,25 @@
   <div class="task">
     <div class="title">
       <span :class="[task.completed ? 'green' : 'red', 'completed']"></span>
-      <h4>{{ task.title }}</h4>
+      <h4 v-if="!isEditing">{{ task.title }}</h4>
+      <input v-if="isEditing" v-model="taskTitle" />
     </div>
 
-    <button class="delete-btn" @click="onDelete(task.id)">X</button>
+    <div class="task-action">
+      <button class="delete-btn" @click="onDelete(task.id)">X</button>
+      <img
+        :src="editSvg"
+        v-if="!isEditing"
+        @click="enableEdit()"
+        class="icons"
+      />
+      <img
+        :src="checkSvg"
+        v-if="isEditing"
+        @click="updateTask()"
+        class="icons"
+      />
+    </div>
   </div>
 </template>
 
@@ -17,6 +32,25 @@ export default {
   props: {
     task: Object,
     onDelete: Function,
+    onEdit: Function,
+  },
+  data() {
+    return {
+      isEditing: false,
+      taskTitle: this.task.title,
+      editSvg: require("../assets/edit.svg"),
+      checkSvg: require("../assets/check.svg"),
+    };
+  },
+  methods: {
+    enableEdit() {
+      this.isEditing = true;
+    },
+
+    updateTask() {
+      this.onEdit({ ...this.task, title: this.taskTitle });
+      this.isEditing = false;
+    },
   },
 };
 </script>
@@ -51,8 +85,19 @@ export default {
   color: red;
   border: unset;
   background-color: white;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   cursor: pointer;
+}
+
+.task-action {
+  display: flex;
+  gap: 1rem;
+}
+
+.icons {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
 }
 </style>
