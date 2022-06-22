@@ -1,5 +1,5 @@
 <template>
-  <Tasks :tasks="tasks" :on-delete="onDeleteTask" />
+  <Tasks :tasks="tasks" :on-delete="onDeleteTask" :on-add="onAddTask" />
 </template>
 
 <script>
@@ -18,6 +18,9 @@ export default {
   methods: {
     onDeleteTask(id) {
       this.tasks = this.tasks.filter((task) => task.id !== id);
+    },
+    onAddTask(taskTitle) {
+      this.tasks.push({ id: Date.now(), title: taskTitle, completed: false });
     },
   },
 
